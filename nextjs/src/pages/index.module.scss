@@ -22,6 +22,7 @@
 
 .auth {
     margin-top: 125px;
+    margin-bottom: 200px;
 }
 
 
@@ -39,6 +40,10 @@
     line-height: 30px;
     margin-top: 0;
     color: #FFFFFF;
+    margin-bottom: 51px;
+    a {
+        cursor: pointer;
+    }
 }
 
 .registerform,
@@ -48,11 +53,11 @@
     align-items: flex-start;
 }
 
-.input::placeholder {
-    font-size: 15px;
-    color: #ABAECA;
-    padding-left: 12px;
-}
+// .input::placeholder {
+//     font-size: 15px;
+//     color: #ABAECA;
+//     padding-left: 12px;
+// }
 
 .error {
     color: #ba3939;
@@ -75,4 +80,5 @@
     font-size: 20px;
     color: #FFFFFF;
     margin-top: 20px;
+    cursor: pointer;
 }

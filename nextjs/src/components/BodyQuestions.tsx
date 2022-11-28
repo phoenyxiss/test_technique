@@ -1,7 +1,7 @@
 import { useState } from "react"
 import Button from "./Button"
 import { useAuth } from "../hooks/useAuth"
-import styles from '../../styles/Home.module.css'
+import styles from './BodyQuestions.module.scss'
 
 enum QuizzType {
     question1,

@@ -83,7 +83,7 @@ function LoginForm() {
 				onChange={e => setPassword(e.target.value)}
 			></Input>
 			<button className={styles.button} type="submit">Login</button>
-			<span className={styles.error}>{errors.join(" ")}</span>
+			{errors.length > 0 ? <span className={styles.error}>{errors.join(" ")}</span> : ""}
 		</form>
 	)
 }
@@ -143,7 +143,7 @@ function RegisterForm() {
 				onChange={e => setPassword(e.target.value)}
 			></Input>
 			<button className={styles.button} type="submit">Création de mon espace</button>
-			<span className={styles.error}>{errors.join(" ")}</span>
+			{errors.length > 0 ? <span className={styles.error}>{errors.join(" ")}</span> : ""}
 		</form>
 	)
 }

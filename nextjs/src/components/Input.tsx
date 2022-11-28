@@ -11,6 +11,9 @@ export default function Input ({ className, ...props }: {
         onChange: (e: ChangeEvent<HTMLInputElement>) => void
     }) {
     return (
-        <input className={`${styles.input} ${className}`} {...props} required/>
+        <div className={styles.inputElement}>
+            <input className={`${styles.input} ${className}`} {...props} placeholder="" required/>
+            <span className={styles.inputPlaceholder}>{props.placeholder}</span>
+        </div>
     )
 } 

@@ -1,6 +1,6 @@
 import { useAuth } from "../hooks/useAuth"
 import Button from "./Button"
-import styles from '../../styles/Home.module.css'
+import styles from './BodyRestitution.module.scss'
 
 // Component to display responses
 export default function BodyRestitution() {
