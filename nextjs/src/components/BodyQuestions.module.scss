@@ -10,7 +10,12 @@
 
 .auth {
     margin-top: 125px;
-    margin-bottom: 200px;
+}
+
+.question2 {
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
 }
 
 .title {
@@ -19,4 +24,32 @@
     font-weight: 500;
     line-height: 40px;
     color: #FFFFFF;
+}
+
+.btnvalidation {
+    border-top: 1px solid black;
+    width: 60rem;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-end;
+}
+
+.buttonContainer {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    vertical-align: middle;
+    align-items: center;
+    height: 12rem;
+    margin-bottom: 10rem;
+}
+
+.buttonContainer2 {
+    height: 20rem;
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    vertical-align: center;
+    align-items: center;
 }

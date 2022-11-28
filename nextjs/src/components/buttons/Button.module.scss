@@ -1,0 +1,47 @@
+.button {
+    width: 400px;
+    height: 70px;
+    border-radius: 200px;
+    border: 1px solid transparent;
+    background: linear-gradient(#1C337F, #DF2A6B) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+    font-size: 20px;
+    color: #FFFFFF;
+    margin-top: 20px;
+    cursor: pointer;
+}
+
+.button.question {
+    width: 240px;
+    height: 70px;
+    background-color: #1C1E33;
+    background: linear-gradient(#1C1E33,#1C1E33) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+}
+.button.question.focused {
+    background: linear-gradient(#1C337F, #DF2A6B) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+}
+
+.button.question2 {
+    width: 400px;
+    height: 70px;
+    background-color: #1C1E33;
+    background: linear-gradient(#1C1E33,#1C1E33) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+}
+.button.question2.focused {
+    background: linear-gradient(#1C337F, #DF2A6B) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+}
+
+.button.validation {
+    font-family: 'Geomanist';
+    font-style: normal;
+    font-weight: 500;
+    font-size: 15px;
+    line-height: 15px;
+    width: 180px;
+    height: 60px;
+    background-color: #1C1E33;
+    background: linear-gradient(#1C1E33,#1C1E33) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+    margin-left: 2rem;
+}
+.button.validation.focused {
+    background: linear-gradient(#1C337F, #DF2A6B) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+}

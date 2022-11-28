@@ -71,7 +71,7 @@ function LoginForm() {
 				id='email'
 				type='text'
 				value={email}
-				placeholder='Entrez votre adresse email'
+				placeholder='✉ Entrez votre adresse email'
 				onChange={e => setEmail(e.target.value)}
 			></Input>
 			<Input
@@ -79,7 +79,7 @@ function LoginForm() {
 				id='password'
 				type='password'
 				value={password}
-				placeholder='•••••••••••••••••••••'
+				placeholder='Mot de passe'
 				onChange={e => setPassword(e.target.value)}
 			></Input>
 			<button className={styles.button} type="submit">Login</button>

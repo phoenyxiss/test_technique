@@ -1,5 +1,5 @@
 import { useState } from "react"
-import Button from "./Button"
+import Button, { ButtonType } from "./buttons/Button"
 import { useAuth } from "../hooks/useAuth"
 import styles from './BodyQuestions.module.scss'
 
@@ -29,10 +29,13 @@ export default function BodyQuestions() {
 			{quizzpage !== QuizzType.end ? 
 				<div className={styles.btnvalidation}>
 					<Button
+						type={ButtonType.validation}
 						value='Annuler'
 						onClick={() => {quizzpage === QuizzType.question1 ? logout() : setQuizzpage(QuizzType.question1)}}
 					></Button>
 					<Button
+						type={ButtonType.validation}
+						isFocused={true}
 						value='Continuer'
 						onClick={() => {setQuizzpage(quizzpage === QuizzType.question1 ? QuizzType.question2 : QuizzType.end)}}
 					></Button>
@@ -44,34 +47,50 @@ export default function BodyQuestions() {
 }
 
 function Question1Form({ setValue }: { setValue(value: number): void} ) {
+	const [currentFocus, setCurrentFocus] = useState(0)
+
 	return (
-	  <div className={`${styles.auth}`}>
+	  <div className={styles.auth}>
         <div className={styles.title}>Avez-vous des connaissances en finances ?</div>
-		<Button
-			value='Non'
-			onClick={() => { setValue(0)}}
-		></Button>
-		<Button
-			value='Oui'
-			onClick={() => { setValue(1)}}
-		></Button>
+		<div className={styles.buttonContainer}>
+			<Button
+				type={ButtonType.question}
+				value='Non'
+				isFocused={currentFocus === 0}
+				onClick={() => { setCurrentFocus(0), setValue(0)}}
+			></Button>
+			<Button
+				type={ButtonType.question}
+				value='Oui'
+				isFocused={currentFocus === 1}
+				onClick={() => { setCurrentFocus(1), setValue(1)}}
+			></Button>
+		</div>
 	  </div>
 	)
   }
 
 function Question2Form({ setValue }: { setValue(value: number): void} ) {
+	const [currentFocus, setCurrentFocus] = useState(0)
 	const { financial_products } = useAuth()
 
 	return (
-		<div className={`${styles.body}`}>
+		<div className={styles.question2}>
 			<div className={styles.title}>Quels produits financiers connaissez-vous ?</div>
-			{financial_products?.map(element => 
-				<Button
-					key={element.Id}
-					value={element.Name}
-					onClick={() => { setValue(element.Id)}}
-				></Button>
-			)}
+			<div className={styles.buttonContainer2}>
+				{financial_products?.map(element => {
+					return <Button
+						type={ButtonType.question2}
+						key={element.Id}
+						value={element.Name}
+						isFocused={currentFocus === element.Id}
+						onClick={() => {
+							setCurrentFocus(element.Id)
+							setValue(element.Id) 
+						}}
+					></Button>
+				})}
+			</div>
 		</div>
 	)
 }
