@@ -2,6 +2,9 @@
 
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
+use App\Http\Controllers\UserController;
+use App\Http\Controllers\FinancialProductsController;
+use App\Http\Controllers\UsersFinancialProductsController;
 
 /*
 |--------------------------------------------------------------------------
@@ -17,3 +20,7 @@ use Illuminate\Support\Facades\Route;
 Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
+
+Route::apiResource('users', UserController::class); // Les routes "users.*" de l'API
+Route::apiResource('financial_products', FinancialProductsController::class); // Les routes "financial_products.*" de l'API
+Route::apiResource('users_financial_products', UsersFinancialProductsController::class); // Les routes "users_financial_products.*" de l'API
