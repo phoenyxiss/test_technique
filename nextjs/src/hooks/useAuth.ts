@@ -44,7 +44,6 @@ let {user, error, financial_products}: { user: IUser | undefined , error: string
 }
 
 export const useAuth = () => {
-    // export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
     const router = useRouter()
 
     // User creation
