@@ -1,7 +1,7 @@
 import Head from 'next/head'
 import Image from 'next/image'
 import { FormEvent, useState } from 'react'
-import styles from '../../styles/Home.module.css'
+import styles from './index.module.scss'
 import Input from '../components/Input'
 import { useAuth } from '../hooks/useAuth'
 
@@ -17,9 +17,9 @@ export default function Home() {
 				<title>Colbr</title>
 				<link rel="icon" href="/favicon.ico" />
 			</Head>
-			<main className={styles.main}>
+			<main className={styles.home}>
 				<a href="https://colbr.co/">
-					<span className={styles.logo}>
+					<span>
 						<Image src="/logo-colbr.webp" alt="Colbr Logo" width={121.03} height={45} />
 					</span>
 				</a>
@@ -34,13 +34,16 @@ function Body() {
 	const [section, setSection] = useState(SectionType.register)
 
 	return (
-		<div>
-			<div className={styles.title}>{section === SectionType.register ? "Création de ton espace Colbr" : "Accès à ton espace Colbr" }</div>
-			{section === SectionType.register ? 
-				<p className={styles.subtitle}>Déjà enregistré ? <a onClick={() => {setSection(SectionType.login)}}>Connecte-toi ici</a></p> : 
-				<p className={styles.subtitle}>Pas de compte ? <a onClick={() => {setSection(SectionType.register)}}>Enregistre-toi ici</a></p>
-			}
-			{section === SectionType.register ? <RegisterForm></RegisterForm> : <LoginForm></LoginForm> }
+		<div className={styles.body}>
+			<div className={styles.auth}>
+				<div className={styles.title}>{section === SectionType.register ? "Création de ton espace Colbr" : "Accès à ton espace Colbr" }</div>
+				{section === SectionType.register ? 
+					<p className={styles.subtitle}>Déjà enregistré ? <a onClick={() => {setSection(SectionType.login)}}>Connecte-toi ici</a></p> : 
+					<p className={styles.subtitle}>Pas de compte ? <a onClick={() => {setSection(SectionType.register)}}>Enregistre-toi ici</a></p>
+				}
+
+				{section === SectionType.register ? <RegisterForm></RegisterForm> : <LoginForm></LoginForm> }
+			</div>
 		</div>
 	)
 }
@@ -50,13 +53,11 @@ function LoginForm() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [errors, setErrors] = useState<string[]>([])
-	const { login } = useAuth({
-		redirectIfAuth: '/connected',
-	})
+	const { login } = useAuth()
 
-	const submitForm = (e: FormEvent) => {
+	const submitForm = async (e: FormEvent) => {
 		e.preventDefault()
-		void login({
+		await void login({
 			setErrors,
 			email,
 			password
@@ -64,23 +65,25 @@ function LoginForm() {
 	}
 
 	return (
-		<form className={styles.financialknowledgeform} onSubmit={submitForm}>
+		<form className={styles.loginform} onSubmit={submitForm}>
 			<Input
-				className='email'
+				className={styles.email}
 				id='email'
 				type='text'
 				value={email}
+				placeholder='Entrez votre adresse email'
 				onChange={e => setEmail(e.target.value)}
 			></Input>
 			<Input
-				className='password'
+				className={styles.password}
 				id='password'
 				type='password'
 				value={password}
+				placeholder='•••••••••••••••••••••'
 				onChange={e => setPassword(e.target.value)}
 			></Input>
-			<button type="submit">Login</button>
-			<span className='error'>{errors.join(" ")}</span>
+			<button className={styles.button} type="submit">Login</button>
+			<span className={styles.error}>{errors.join(" ")}</span>
 		</form>
 	)
 }
@@ -92,13 +95,11 @@ function RegisterForm() {
 	const [email, setEmail] = useState('')
 	const [password, setPassword] = useState('')
 	const [errors, setErrors] = useState<string[]>([])
-	const { register } = useAuth({
-		redirectIfAuth: '/connected',
-	})
+	const { register } = useAuth()
 
-	const submitForm = (e: FormEvent) => {
+	const submitForm = async (e: FormEvent) => {
 		e.preventDefault()
-		void register({
+		await void register({
 			setErrors,
 			firstName,
 			lastName,
@@ -108,37 +109,41 @@ function RegisterForm() {
 	}
 
 	return (
-		<form className={styles.financialproductsform} onSubmit={submitForm}>
+		<form className={styles.registerform} onSubmit={submitForm}>
 			<Input
-				className='firstname'
+				className={styles.firstname}
 				id='firstname'
 				type='text'
 				value={firstName}
+				placeholder='Prénom*'
 				onChange={e => setFirstName(e.target.value)}
 			></Input>
 			<Input
-				className='lastname'
+				className={styles.lastname}
 				id='lastname'
 				type='text'
 				value={lastName}
+				placeholder='Nom*'
 				onChange={e => setLastName(e.target.value)}
 			></Input>
 			<Input
-				className='email'
+				className={styles.email}
 				id='email'
 				type='text'
 				value={email}
+				placeholder='Email*'
 				onChange={e => setEmail(e.target.value)}
 			></Input>
 			<Input
-				className='password'
+				className={styles.password}
 				id='password'
 				type='password'
 				value={password}
+				placeholder='•••••••••••••••••••••'
 				onChange={e => setPassword(e.target.value)}
 			></Input>
-			<button type="submit">Création de mon espace</button>
-			<span className='error'>{errors.join(" ")}</span>
+			<button className={styles.button} type="submit">Création de mon espace</button>
+			<span className={styles.error}>{errors.join(" ")}</span>
 		</form>
 	)
 }

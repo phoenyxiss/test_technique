@@ -43,13 +43,14 @@ let {user, error, financial_products}: { user: IUser | undefined , error: string
     financial_products: []
 }
 
-export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
+export const useAuth = () => {
+    // export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
     const router = useRouter()
 
     // User creation
     const register = async ({ setErrors, ...props }: IRegisterParams) => {
         setErrors([])
-
+        console.log('register', user)
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const response = await fetch(`http://localhost:8000/api/users`, { 
@@ -74,13 +75,14 @@ export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
                 id: json.Id
             }
             await getFinancialProducts(setErrors)
+            router.push('/connected')
         }
     }
 
     // User login
     const login = async ({ setErrors, ...props }: ILoginParams) => {
         setErrors([])
-
+        console.log('login', user)
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const response = await fetch(`http://localhost:8000/api/users/show?Email=${props.email}&Password=${props.password}`, {})
@@ -98,11 +100,13 @@ export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
             }
             await getFinancialProducts(setErrors)
             await getAllUserInfo(setErrors)
+            router.push('/connected')
         }
     }
 
     // User logout
     const logout = async () => {
+        console.log('logout')
         user = undefined
         router.push('/')
     }
@@ -110,7 +114,7 @@ export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
     // Save quizz responses
     const setResponses = async ({ setErrors, ...props }: IQuestionParams) => {
         setErrors([])
-
+        console.log('responses', user)
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const response = await fetch(`http://localhost:8000/api/users/${user?.id}`, {
@@ -146,7 +150,7 @@ export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
     // Get list of financial products
     const getFinancialProducts = async (setErrors : (value: string[]) => void) => {
         setErrors([])
-        
+        console.log('getfn', user)
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const response = await fetch(`http://localhost:8000/api/financial_products`, {})
@@ -162,7 +166,7 @@ export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
     // Get user information and his responses
     const getAllUserInfo = async (setErrors : (value: string[]) => void) => {
         setErrors([])
-
+        console.log('alluserinfo', user)
         const headers = new Headers();
         headers.append("Content-Type", "application/json");
         const response = await fetch(`http://localhost:8000/api/users_financial_products/show?UserId=${user?.id}`, {})
@@ -179,12 +183,13 @@ export const useAuth = ({ redirectIfAuth }: {redirectIfAuth?: string}) => {
 
     }
 
-    // Redirection
-    useEffect(() => {
-        if (redirectIfAuth !== undefined && user !== undefined)
-            router.push(redirectIfAuth)
-        if (error !== undefined) logout()
-    }, [user, error])
+    // // Redirection
+    // useEffect(() => {
+    //     console.log("useEffect", user)
+    //     if (redirectIfAuth !== undefined && user !== undefined)
+    //         router.push(redirectIfAuth)
+    //     if (error !== undefined) logout()
+    // }, [user, error])
 
     return {
         user,

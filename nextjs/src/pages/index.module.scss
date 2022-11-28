@@ -1,0 +1,78 @@
+.home {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: absolute;
+    height: 125px;
+    left: 0px;
+    right: 0px;
+    top: 0px;
+    background: #25273E;
+}
+
+.body {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 125px;
+    display: flex;
+    flex-direction: column;
+    align-items: center ;
+}
+
+.auth {
+    margin-top: 125px;
+}
+
+
+.title {
+    margin-top: 20px;
+    font-size: 35px;
+    font-weight: 500;
+    line-height: 40px;
+    color: #FFFFFF;
+}
+
+.subtitle {
+    font-size: 15px;
+    font-weight: 400;
+    line-height: 30px;
+    margin-top: 0;
+    color: #FFFFFF;
+}
+
+.registerform,
+.loginform {
+    display: flex;
+    flex-direction: column;
+    align-items: flex-start;
+}
+
+.input::placeholder {
+    font-size: 15px;
+    color: #ABAECA;
+    padding-left: 12px;
+}
+
+.error {
+    color: #ba3939;
+    width: 400px;
+    height: 50px;
+    border-radius: 200px;
+    border: 1px solid transparent;
+    background: linear-gradient(#ffe0e0, #ffe0e0) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+    font-size: 20px;
+    margin-top: 20px;
+    text-align: center;
+}
+
+.button {
+    width: 400px;
+    height: 70px;
+    border-radius: 200px;
+    border: 1px solid transparent;
+    background: linear-gradient(#1C337F, #DF2A6B) padding-box, linear-gradient(#1C337F, #DF2A6B) border-box;
+    font-size: 20px;
+    color: #FFFFFF;
+    margin-top: 20px;
+}

@@ -15,19 +15,19 @@ export default function BodyQuestions() {
 	const [errors, setErrors] = useState<string[]>([])
 	const [financialKnowledge, setfinancialKnowledge] = useState(0)
 	const [financialProducts, setfinancialProducts] = useState(0)
-	const { logout, setResponses } = useAuth({})
+	const { logout, setResponses } = useAuth()
 	const save = () => {
 		setResponses({setErrors, financialKnowledge, financialProducts})
 	}
 
 	return (
-		<div>
+		<div className={styles.body}>
 			{quizzpage === QuizzType.question1 ? <Question1Form setValue={setfinancialKnowledge}></Question1Form> : 
 				quizzpage === QuizzType.question2 ? <Question2Form setValue={setfinancialProducts}></Question2Form> : 
 					<End save={save}></End>
 			}
 			{quizzpage !== QuizzType.end ? 
-				<div className={styles.validationbtn}>
+				<div className={styles.btnvalidation}>
 					<Button
 						value='Annuler'
 						onClick={() => {quizzpage === QuizzType.question1 ? logout() : setQuizzpage(QuizzType.question1)}}
@@ -45,7 +45,7 @@ export default function BodyQuestions() {
 
 function Question1Form({ setValue }: { setValue(value: number): void} ) {
 	return (
-	  <div>
+	  <div className={`${styles.auth}`}>
         <div className={styles.title}>Avez-vous des connaissances en finances ?</div>
 		<Button
 			value='Non'
@@ -60,13 +60,14 @@ function Question1Form({ setValue }: { setValue(value: number): void} ) {
   }
 
 function Question2Form({ setValue }: { setValue(value: number): void} ) {
-	const { financial_products } = useAuth({})
+	const { financial_products } = useAuth()
 
 	return (
-		<div>
+		<div className={`${styles.body}`}>
 			<div className={styles.title}>Quels produits financiers connaissez-vous ?</div>
 			{financial_products?.map(element => 
 				<Button
+					key={element.Id}
 					value={element.Name}
 					onClick={() => { setValue(element.Id)}}
 				></Button>
