@@ -23,7 +23,7 @@ class UserController extends Controller
             'LastName' => $request->LastName,
             'FirstName' => $request->FirstName,
             'Email' => $request->Email,
-            'Password' => ($request->Password)
+            'Password' => Hash::make($request->Password)
         ]);
         return response()->json($user, 200);
     }
@@ -35,12 +35,13 @@ class UserController extends Controller
             'Password' => 'string|required',
         ]);
 
-        $user = UserModel::where('Password', '=', ($request->Password))->where('Email', '=', $request->Email)->first();
-        if ($user === null) {
+        $user = UserModel::where('Email', '=', $request->Email)->first();
+        if (!Hash::check($request->Password, $user->Password)) {
             return response()->json([
-                'code' => 401,
-                'message' => "Wrong password"], 401);
-        }
+                'success'=>false,
+                'message' => 'Wrong password'
+            ], 401);
+         }
         return response()->json($user, 200);
     }
 
