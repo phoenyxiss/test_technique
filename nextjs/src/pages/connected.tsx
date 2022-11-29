@@ -1,15 +1,17 @@
-import Head from 'next/head'
-import Image from 'next/image'
-import styles from './connected.module.scss'
-import { useAuth } from '../hooks/useAuth'
-import BodyRestitution from '../components/BodyRestitution'
-import BodyQuestions from '../components/BodyQuestions'
+import Head from "next/head";
+import Image from "next/image";
+import BodyRestitution from "../components/BodyRestitution";
+import BodyQuestions from "../components/BodyQuestions";
+import { useAuth } from "../contexts/auth.context";
+import styles from "./connected.module.scss";
 
 // Component to display either questions or responses
 export default function Connected() {
-	const { logout, user } = useAuth()
-	if(user === undefined) logout()
-	console.log('isset', (user?.financialKnowledge !== undefined && user.financialProductsName !== undefined))
+	const { logout, user } = useAuth();
+
+	if( user === undefined || user.email === ''	)
+		logout();
+
     return (
 		<div className={styles.container}>
 			<Head>
@@ -23,7 +25,7 @@ export default function Connected() {
 					</span>
 				</a>
 			</main>
-			{(user?.financialKnowledge !== undefined && user.financialProductsName !== undefined) ? <BodyRestitution></BodyRestitution> : <BodyQuestions></BodyQuestions>}
+			{( user?.financialKnowledge !== undefined && user.financialProductsName !== undefined ) ? <BodyRestitution></BodyRestitution> : <BodyQuestions></BodyQuestions>}
 		</div>
-	  )
+	);
 }

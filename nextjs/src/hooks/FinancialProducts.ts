@@ -1,55 +1,60 @@
-import { useEffect, useState } from "react"
+import { useEffect, useState } from "react";
+import { useAuth } from "../contexts/auth.context";
+import requestsService from "../services/requests.service";
 
+interface IFinancialProduct {
+    Id: number,
+    Name: string
+}
 
-// interface IFinancialProduct {
-//     Id: number,
-//     Name: string
-// }
+export const useFinancialProducts = () => {
+	const [ financialProducts, setFinancialProducts ] = useState<IFinancialProduct[]>([]);
+    const { logout, user } = useAuth();
 
-// export const useFinacialProducts = () => {
-// 	const [financialProducts, setFinancialProducts] = useState<IFinancialProduct[]>([])
+    // Get list of financial products
+    const getFinancialProducts = async () => {
+        const [ status, response ] = await requestsService(`/financial_products`, 'GET');
+        return response;
+    }
 
-//     // Get list of financial products
-//     const getFinancialProducts = async () => {
+	// Get list of financial products by user
+    const getFinancialProductsByUser = async (userId : number) => {
+        const [ status, response ] = await requestsService(`/users_financial_products/show?UserId=${userId}`, 'GET');
 
-//         const headers = new Headers();
-//         headers.append("Content-Type", "application/json");
-//         const response = await fetch(`${process.env.API_URL}/financial_products`, {})
-//         const json = await response.json();
+        if ( status !== 200 ) {
+            return [];
+        }
+        return [ response.FinancialProductId, financialProducts?.find(elm => elm.Id == response.FinancialProductId )?.Name ];
+    };
 
-//         // if (response.status !== 200) {
-//         //     setErrors([json.message])
-//         // } else {
-//         //     financial_products = json
-//         // }
-//         return json
-//     }
+    // Save quizz responses
+    const setResponses = async ({ financialKnowledge, financialProducts }: { financialKnowledge: number, financialProducts: number }) => {
+        const [ status, response ] = await requestsService(`/users/${user.id}`, 'PATCH', 
+        {
+            FinancialKnowledge: financialKnowledge,
+        });
 
-// 	// Get list of financial products by user
-//     const getFinancialProductsByUser = async (setErrors : (value: string[]) => void) => {
-//         setErrors([])
+        if ( status === 200 ) {
+            const [ stat, res ] = await requestsService(`/users_financial_products`, 'POST', 
+            {
+                UserId: user.id,
+                FinancialProductId: financialProducts,
+            });
+            if ( stat === 200 ) {
+                logout();
+            }
+        }
+    };
 
-// 		const headers = new Headers();
-//         headers.append("Content-Type", "application/json");
-//         const response = await fetch(`${process.env.API_URL}/users_financial_products/show?UserId=${user?.id}`, {})
-//         const json = await response.json();
+    useEffect(() => {
+        getFinancialProducts().then((financial_products: IFinancialProduct[]) => {
+			setFinancialProducts(financial_products)
+		});
+    }, []);
 
-//         if (response.status !== 200) {
-//             setErrors([json.message])
-//         } else {
-//             if(user !== undefined) {
-//                 user.financialProducts = json.FinancialProductId
-//                 user.financialProductsName = financial_products?.find(elm => elm.Id == json.FinancialProductId )?.Name
-//             }
-//         }
-
-//     }
-
-//     useEffect(() => {
-//         getFinancialProducts().then((financial_products: IFinancialProduct[]) => {
-// 			setFinancialProducts(financial_products)
-// 		})
-//     }, [])
-
-//     return (financialProducts)
-// }
+    return {
+        financialProducts,
+        getFinancialProductsByUser,
+        setResponses
+    };
+}

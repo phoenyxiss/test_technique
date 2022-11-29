@@ -1,10 +1,10 @@
-import { useAuth } from "../hooks/useAuth"
-import Button from "./buttons/Button"
-import styles from './BodyRestitution.module.scss'
+import { useAuth } from "../contexts/auth.context";
+import Button from "./buttons/Button";
+import styles from './BodyRestitution.module.scss';
 
 // Component to display responses
 export default function BodyRestitution() {
-	const { logout, user } = useAuth()
+	const { logout, user } = useAuth();
 
 	return (
 		<div className={styles.body}>
@@ -18,5 +18,5 @@ export default function BodyRestitution() {
 				onClick={() => logout()}
 			></Button>
 		</div>
-	)
+	);
 }

@@ -1,5 +1,4 @@
-import { MouseEvent, useState } from 'react';
-import styles from './Button.module.scss'
+import styles from "./Button.module.scss";
 
 export enum ButtonType {
     default = "default",
@@ -9,18 +8,18 @@ export enum ButtonType {
 }
 
 // Button component
-export default function Button ({ type = ButtonType.default, isFocused = false, ...props }: {
+export default function Button ( { type = ButtonType.default, isFocused = false, ...props }: {
         type?: ButtonType,
         isFocused?: boolean,
         value: string,
-        onClick: () => void}) {
+        onClick: () => void} ) {
     
     return (
         <button 
             className={`${styles.button} ${styles[type]} ${isFocused ? styles.focused : ""}`} 
             type="button"
-            {...props}>
-            {props.value}
+            { ...props }>
+            { props.value }
         </button>
-    )
+    );
 }
